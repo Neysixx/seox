@@ -1,8 +1,8 @@
 import type { Metadata } from 'next';
-import type { SEOAuthor, SEOConfig } from '../../types';
+import type { SEOAuthor, SEOConfig, SEOJsonLd } from '../../types';
 
 export class Seox {
-	private config: SEOConfig;
+	public config: SEOConfig;
 
 	constructor(config: SEOConfig) {
 		this.config = config;
@@ -25,22 +25,22 @@ export class Seox {
 				: undefined,
 			openGraph: merged.openGraph
 				? {
-						...this.config.openGraph,
-						...overrides?.openGraph,
-						url: overrides?.openGraph?.url ?? this.config.openGraph?.url ?? this.config.url,
-						siteName: overrides?.openGraph?.siteName ?? this.config.openGraph?.siteName ?? this.config.name,
-					}
+					...this.config.openGraph,
+					...overrides?.openGraph,
+					url: overrides?.openGraph?.url ?? this.config.openGraph?.url ?? this.config.url,
+					siteName: overrides?.openGraph?.siteName ?? this.config.openGraph?.siteName ?? this.config.name,
+				}
 				: undefined,
 			twitter: merged.twitter ? { ...this.config.twitter, ...overrides?.twitter } : undefined,
 			robots: merged.robots
 				? {
-						...this.config.robots,
-						...overrides?.robots,
-						googleBot:
-							overrides?.robots?.googleBot || this.config.robots?.googleBot
-								? { ...this.config.robots?.googleBot, ...overrides?.robots?.googleBot }
-								: undefined,
-					}
+					...this.config.robots,
+					...overrides?.robots,
+					googleBot:
+						overrides?.robots?.googleBot || this.config.robots?.googleBot
+							? { ...this.config.robots?.googleBot, ...overrides?.robots?.googleBot }
+							: undefined,
+				}
 				: undefined,
 		};
 
@@ -49,5 +49,25 @@ export class Seox {
 
 	generatePageMetadata(overrides?: Partial<SEOConfig>): Metadata {
 		return this.configToMetadata(overrides);
+	}
+
+	/**
+	 * Returns the JSON-LD schemas configured for this SEO config
+	 * @param overrides - Optional additional JSON-LD schemas to include
+	 * @returns Array of JSON-LD schema objects
+	 */
+	getJsonLd(overrides?: SEOJsonLd[]): SEOJsonLd[] {
+		const baseJsonLd = this.config.jsonld ?? [];
+		const additionalJsonLd = overrides ?? [];
+		return [...baseJsonLd, ...additionalJsonLd];
+	}
+
+	/**
+	 * Returns the JSON-LD schemas as stringified JSON strings ready for injection
+	 * @param overrides - Optional additional JSON-LD schemas to include
+	 * @returns Array of stringified JSON-LD schemas
+	 */
+	getJsonLdStrings(overrides?: SEOJsonLd[]): string[] {
+		return this.getJsonLd(overrides).map((schema) => JSON.stringify(schema));
 	}
 }
