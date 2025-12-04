@@ -1,5 +1,5 @@
 export const TEMPLATES = {
-  config: `import { Seox } from "seox/next";
+	config: `import { Seox } from "seox/next";
 
 export const seoConfig = new Seox({
   name: "{{siteName}}",

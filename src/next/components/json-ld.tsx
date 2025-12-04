@@ -1,9 +1,10 @@
-import type { Seox } from '../classes/seox';
+import * as React from 'react';
 import type { SEOJsonLd } from '../../types';
+import type { Seox } from '../classes/seox';
 
 interface JsonLdProps {
-    seo: Seox;
-    additionalSchemas?: SEOJsonLd[];
+	seo: Seox;
+	additionalSchemas?: SEOJsonLd[];
 }
 
 /**
@@ -28,22 +29,21 @@ interface JsonLdProps {
  * ```
  */
 export function JsonLd({ seo, additionalSchemas }: JsonLdProps) {
-    const schemas = seo.getJsonLd(additionalSchemas);
+	const schemas = seo.getJsonLd(additionalSchemas);
 
-    if (!schemas || schemas.length === 0) {
-        return null;
-    }
+	if (!schemas || schemas.length === 0) {
+		return null;
+	}
 
-    return (
-        <>
-            {schemas.map((schema, index) => (
-                <script
-                    key={`jsonld-${index}`}
-                    type="application/ld+json"
-                    dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
-                />
-            ))}
-        </>
-    );
+	return (
+		<>
+			{schemas.map((schema, index) => (
+				<script
+					key={`jsonld-${index}`}
+					type='application/ld+json'
+					dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+				/>
+			))}
+		</>
+	);
 }
-

@@ -25,22 +25,22 @@ export class Seox {
 				: undefined,
 			openGraph: merged.openGraph
 				? {
-					...this.config.openGraph,
-					...overrides?.openGraph,
-					url: overrides?.openGraph?.url ?? this.config.openGraph?.url ?? this.config.url,
-					siteName: overrides?.openGraph?.siteName ?? this.config.openGraph?.siteName ?? this.config.name,
-				}
+						...this.config.openGraph,
+						...overrides?.openGraph,
+						url: overrides?.openGraph?.url ?? this.config.openGraph?.url ?? this.config.url,
+						siteName: overrides?.openGraph?.siteName ?? this.config.openGraph?.siteName ?? this.config.name,
+					}
 				: undefined,
 			twitter: merged.twitter ? { ...this.config.twitter, ...overrides?.twitter } : undefined,
 			robots: merged.robots
 				? {
-					...this.config.robots,
-					...overrides?.robots,
-					googleBot:
-						overrides?.robots?.googleBot || this.config.robots?.googleBot
-							? { ...this.config.robots?.googleBot, ...overrides?.robots?.googleBot }
-							: undefined,
-				}
+						...this.config.robots,
+						...overrides?.robots,
+						googleBot:
+							overrides?.robots?.googleBot || this.config.robots?.googleBot
+								? { ...this.config.robots?.googleBot, ...overrides?.robots?.googleBot }
+								: undefined,
+					}
 				: undefined,
 		};
 

@@ -151,16 +151,15 @@ function isLayoutFile(filePath: string): boolean {
  * @returns The updated content with JsonLd component
  */
 function addJsonLdToLayout(content: string): string {
-	// Check if JsonLd is already imported
-	if (content.includes('JsonLd')) {
+	// Check if JsonLd component is already used in JSX
+	if (content.includes('<JsonLd')) {
 		return content;
 	}
 
 	let newContent = content;
 
-	// Update import to include JsonLd
-	if (newContent.includes("import { seoConfig } from '@/lib/seo'")) {
-		// Add JsonLd import from seox/next
+	// Add JsonLd import from seox/next (if not already imported)
+	if (newContent.includes("import { seoConfig } from '@/lib/seo'") && !newContent.includes('import { JsonLd }')) {
 		const lines = newContent.split('\n');
 		let insertIndex = 0;
 
@@ -176,12 +175,20 @@ function addJsonLdToLayout(content: string): string {
 		newContent = lines.join('\n');
 	}
 
-	// Add <JsonLd seo={seoConfig} /> inside <head> tag
+	// Case 1: <head> tag exists - add JsonLd inside it
 	if (newContent.includes('<head>') && !newContent.includes('<JsonLd')) {
-		newContent = newContent.replace(/<head>(\s*)/, '<head>$1<JsonLd seo={seoConfig} />$1');
+		newContent = newContent.replace(/<head>(\s*)/, '<head>$1<JsonLd seo={seoConfig} />\n$1');
 	} else if (newContent.includes('<head') && !newContent.includes('<JsonLd')) {
 		// Handle <head ...> with attributes
-		newContent = newContent.replace(/(<head[^>]*>)(\s*)/, '$1$2<JsonLd seo={seoConfig} />$2');
+		newContent = newContent.replace(/(<head[^>]*>)(\s*)/, '$1$2<JsonLd seo={seoConfig} />\n$2');
+	}
+	// Case 2: No <head> tag - add <head> with JsonLd after <html> tag
+	else if (!newContent.includes('<head') && newContent.includes('<html')) {
+		// Match <html ...> tag and add <head> after it
+		newContent = newContent.replace(
+			/(<html[^>]*>)(\s*)/,
+			'$1$2<head>\n        <JsonLd seo={seoConfig} />\n      </head>$2',
+		);
 	}
 
 	return newContent;
