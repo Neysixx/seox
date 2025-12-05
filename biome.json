@@ -8,15 +8,8 @@
 	},
 	"files": {
 		"ignoreUnknown": false,
-		"includes": [
-			"./src/**/*.{js,ts,jsx,tsx,json,css,html}"
-		],
-		"experimentalScannerIgnores": [
-			"**/.next/**/*",
-			"**/node_modules/**/*",
-			"**/dist/**/*",
-			"**/out/**/*"
-		]
+		"includes": ["./src/**/*.{js,ts,jsx,tsx,json,css,html}"],
+		"experimentalScannerIgnores": ["**/.next/**/*", "**/node_modules/**/*", "**/dist/**/*", "**/out/**/*"]
 	},
 	"formatter": {
 		"enabled": true,
