@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.0](https://github.com/Neysixx/seox/compare/v1.0.0...v1.1.0) (2025-12-04)
+
+
+### Features
+
+* json ld support ([945e326](https://github.com/Neysixx/seox/commit/945e326ab08176dde1f2bacec1176795dcbc9469))
+
 ## 1.0.0 (2025-10-06)
 
 

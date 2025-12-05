@@ -8,7 +8,15 @@
 	},
 	"files": {
 		"ignoreUnknown": false,
-		"includes": ["src/**/*.{js,ts,jsx,tsx,json}", "tests/**/*.ts"]
+		"includes": [
+			"./src/**/*.{js,ts,jsx,tsx,json,css,html}"
+		],
+		"experimentalScannerIgnores": [
+			"**/.next/**/*",
+			"**/node_modules/**/*",
+			"**/dist/**/*",
+			"**/out/**/*"
+		]
 	},
 	"formatter": {
 		"enabled": true,
@@ -33,12 +41,20 @@
 				"noUnusedVariables": {
 					"level": "info",
 					"fix": "unsafe"
-				}
+				},
+				"noUnusedImports": "off",
+				"noUnusedFunctionParameters": "off"
 			},
 			"complexity": {
 				"noForEach": "off"
 			},
-			"style": {}
+			"security": {
+				"noDangerouslySetInnerHtml": "off"
+			},
+			"style": {
+				"useNodejsImportProtocol": "off",
+				"useTemplate": "off"
+			}
 		}
 	},
 	"javascript": {

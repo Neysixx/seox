@@ -144,9 +144,15 @@ program
 			// Information about overrides
 			if (results.added > 0 || results.overwritten > 0) {
 				console.log(chalk.cyan.bold('\n📝 Next Steps:\n'));
-				console.log(chalk.white('   The following metadata export has been added to your files:'));
+				console.log(chalk.white('   The following has been added to your files:'));
 				console.log(chalk.gray("   import { seoConfig } from '@/lib/seo';"));
+				console.log(chalk.gray("   import { JsonLd } from 'seox/next';"));
 				console.log(chalk.gray('   export const metadata = seoConfig.configToMetadata();\n'));
+
+				console.log(chalk.white('   For layout files, the <JsonLd /> component was also added:'));
+				console.log(chalk.gray('   <head>'));
+				console.log(chalk.gray('     <JsonLd seo={seoConfig} />'));
+				console.log(chalk.gray('   </head>\n'));
 
 				console.log(chalk.white('   To customize metadata for specific pages, you can:'));
 				console.log(chalk.gray('   1. Pass overrides to configToMetadata():'));
@@ -154,7 +160,7 @@ program
 				console.log(chalk.gray('        title: "Custom Page Title",'));
 				console.log(chalk.gray('        description: "Custom description"'));
 				console.log(chalk.gray('      });\n'));
-				console.log(chalk.gray('   2. Or manually modify the metadata object after generation'));
+				console.log(chalk.gray('   2. Add JSON-LD schemas in your seo.ts config'));
 				console.log();
 			}
 		} catch (error) {

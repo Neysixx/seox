@@ -5,7 +5,7 @@
 Seox is an **open source tool** that centralizes and automates **SEO management** (meta tags, Open Graph, JSON-LD...) in **Next.js** projects using the **App Router**.  
 It combines **TypeScript-typed configuration**, **automatic metadata injection**, and an **intuitive CLI** to guide developers.
 
-[![npm version](https://img.shields.io/npm/v/metanext.svg)](https://www.npmjs.com/package/@neysixx/metanext)
+[![npm version](https://img.shields.io/npm/v/metanext.svg)](https://www.npmjs.com/package/seox)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
 
@@ -130,9 +130,23 @@ After running `bunx seox configure`, your files are automatically updated:
 ```tsx
 // app/layout.tsx (automatically generated)
 import { seoConfig } from "@/lib/seo";
+import { JsonLd } from "seox/next";
 
 export const metadata = seoConfig.configToMetadata();
+
+export default function RootLayout({ children }) {
+  return (
+    <html lang="en">
+      <head>
+        <JsonLd seo={seoConfig} />
+      </head>
+      <body>{children}</body>
+    </html>
+  );
+}
 ```
+
+> 💡 The `<JsonLd />` component automatically injects all JSON-LD structured data configured in your `seoConfig`.
 
 #### Page-specific Customization
 
@@ -189,6 +203,134 @@ Seox merges these fields with the global configuration.
 
 ---
 
+## 🏗️ JSON-LD Structured Data
+
+Seox provides full support for **JSON-LD structured data** to improve your SEO with rich snippets in Google search results.
+
+### Configuration
+
+Add your JSON-LD schemas in your `seo.ts` configuration:
+
+```ts
+import { Seox } from "seox/next";
+
+export const seoConfig = new Seox({
+  name: "My Site",
+  url: "https://mysite.com",
+  // ... other config
+  jsonld: [
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      name: "My Company",
+      url: "https://mysite.com",
+      logo: "https://mysite.com/logo.png",
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "LocalBusiness",
+      name: "My Business",
+      address: {
+        "@type": "PostalAddress",
+        addressLocality: "Paris",
+        addressCountry: "FR",
+      },
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      mainEntity: [
+        {
+          "@type": "Question",
+          name: "What is your service?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "We provide amazing services...",
+          },
+        },
+      ],
+    },
+  ],
+});
+```
+
+### Usage with `<JsonLd />` Component
+
+The `<JsonLd />` component automatically renders all your JSON-LD schemas as `<script type="application/ld+json">` tags:
+
+```tsx
+// app/layout.tsx
+import { seoConfig } from "@/lib/seo";
+import { JsonLd } from "seox/next";
+
+export default function RootLayout({ children }) {
+  return (
+    <html lang="en">
+      <head>
+        <JsonLd seo={seoConfig} />
+      </head>
+      <body>{children}</body>
+    </html>
+  );
+}
+```
+
+### Adding Page-specific Schemas
+
+You can add additional schemas for specific pages:
+
+```tsx
+// app/product/[id]/page.tsx
+import { seoConfig } from "@/lib/seo";
+import { JsonLd } from "seox/next";
+
+export default function ProductPage() {
+  const productSchema = {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    name: "Amazing Product",
+    price: "99.99",
+  };
+
+  return (
+    <>
+      <JsonLd seo={seoConfig} additionalSchemas={[productSchema]} />
+      {/* Page content */}
+    </>
+  );
+}
+```
+
+### Programmatic Access
+
+You can also access JSON-LD data programmatically:
+
+```ts
+// Get JSON-LD as objects
+const schemas = seoConfig.getJsonLd();
+
+// Get JSON-LD as stringified JSON (ready for injection)
+const jsonStrings = seoConfig.getJsonLdStrings();
+```
+
+### Supported Schema Types
+
+Seox supports all [Schema.org](https://schema.org) types:
+
+| Schema Type | Use Case |
+|-------------|----------|
+| `Organization` | Company information |
+| `LocalBusiness` | Local business with address, hours |
+| `FAQPage` | FAQ sections for rich snippets |
+| `Product` | E-commerce products |
+| `Article` | Blog posts and articles |
+| `BreadcrumbList` | Navigation breadcrumbs |
+| `WebSite` | Site-wide search box |
+| `Person` | Author profiles |
+| `Review` / `AggregateRating` | Reviews and ratings |
+
+---
+
 ## 🧰 Built-in CLI
 
 Seox provides an intuitive CLI:
@@ -240,8 +382,26 @@ Centralized SEO configuration with complete TypeScript typing.
 Method that generates Next.js metadata from your configuration.  
 Accepts optional overrides to customize per page.
 
-### `seoConfig.configToMetadata()`
-Direct usage in your Next.js files to generate metadata.
+### `getJsonLd(additionalSchemas?)`
+Returns the JSON-LD schemas as an array of objects.  
+Accepts optional additional schemas to merge with config.
+
+### `getJsonLdStrings(additionalSchemas?)`
+Returns the JSON-LD schemas as stringified JSON strings, ready for injection.
+
+### `<JsonLd />` Component
+React component to inject JSON-LD structured data into the page `<head>`.
+
+```tsx
+import { JsonLd } from "seox/next";
+
+<JsonLd seo={seoConfig} additionalSchemas={[...]} />
+```
+
+| Prop | Type | Description |
+|------|------|-------------|
+| `seo` | `Seox` | Your Seox configuration instance |
+| `additionalSchemas` | `SEOJsonLd[]` | Optional additional schemas to include |
 
 ---
 
@@ -259,7 +419,8 @@ Direct usage in your Next.js files to generate metadata.
 | Multilingual support (`hreflang`) | 🔜 |
 | Automatic OG image generation | 🔜 |
 | Predefined templates (`--template blog`) | 🔜 |
-| Advanced JSON-LD support | 🔜 |
+| JSON-LD structured data | ✅ |
+| `<JsonLd />` React component | ✅ |
 
 ---
 

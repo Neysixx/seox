@@ -137,6 +137,64 @@ function extractMetadataContent(content: string): string {
 }
 
 /**
+ * Check if a file is a layout file
+ * @param filePath - The path to the file
+ * @returns Whether the file is a layout file
+ */
+function isLayoutFile(filePath: string): boolean {
+	return filePath.endsWith('layout.tsx') || filePath.endsWith('layout.ts');
+}
+
+/**
+ * Add JsonLd component to the layout file
+ * @param content - The content of the file
+ * @returns The updated content with JsonLd component
+ */
+function addJsonLdToLayout(content: string): string {
+	// Check if JsonLd component is already used in JSX
+	if (content.includes('<JsonLd')) {
+		return content;
+	}
+
+	let newContent = content;
+
+	// Add JsonLd import from seox/next (if not already imported)
+	if (newContent.includes("import { seoConfig } from '@/lib/seo'") && !newContent.includes('import { JsonLd }')) {
+		const lines = newContent.split('\n');
+		let insertIndex = 0;
+
+		// Find the seoConfig import line to add JsonLd import after it
+		for (let i = 0; i < lines.length; i++) {
+			if (lines[i].includes("import { seoConfig } from '@/lib/seo'")) {
+				insertIndex = i + 1;
+				break;
+			}
+		}
+
+		lines.splice(insertIndex, 0, "import { JsonLd } from 'seox/next';");
+		newContent = lines.join('\n');
+	}
+
+	// Case 1: <head> tag exists - add JsonLd inside it
+	if (newContent.includes('<head>') && !newContent.includes('<JsonLd')) {
+		newContent = newContent.replace(/<head>(\s*)/, '<head>$1<JsonLd seo={seoConfig} />\n$1');
+	} else if (newContent.includes('<head') && !newContent.includes('<JsonLd')) {
+		// Handle <head ...> with attributes
+		newContent = newContent.replace(/(<head[^>]*>)(\s*)/, '$1$2<JsonLd seo={seoConfig} />\n$2');
+	}
+	// Case 2: No <head> tag - add <head> with JsonLd after <html> tag
+	else if (!newContent.includes('<head') && newContent.includes('<html')) {
+		// Match <html ...> tag and add <head> after it
+		newContent = newContent.replace(
+			/(<html[^>]*>)(\s*)/,
+			'$1$2<head>\n        <JsonLd seo={seoConfig} />\n      </head>$2',
+		);
+	}
+
+	return newContent;
+}
+
+/**
  * Add metadata to the file
  * @param filePath - The path to the file
  * @param overwrite - Whether to overwrite the existing metadata
@@ -197,6 +255,11 @@ export async function addMetadataToFile(filePath: string, overwrite: boolean = f
 
 	lines.splice(insertIndex, 0, metadataExport);
 	newContent = lines.join('\n');
+
+	// For layout files, also add JsonLd component
+	if (isLayoutFile(filePath)) {
+		newContent = addJsonLdToLayout(newContent);
+	}
 
 	await fs.writeFile(filePath, newContent, 'utf8');
 	return true;
