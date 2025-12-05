@@ -8,10 +8,7 @@
 	},
 	"files": {
 		"ignoreUnknown": false,
-		"includes": [
-			"src/**/*.{js,ts,jsx,tsx,json}",
-			"tests/**/*.ts"
-		]
+		"includes": ["src/**/*.{js,ts,jsx,tsx,json}", "tests/**/*.ts"]
 	},
 	"formatter": {
 		"enabled": true,
