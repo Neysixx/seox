@@ -19,7 +19,7 @@ program
 		try {
 			// Check if the file exists
 			if (!(await fs.pathExists(getPath(SEO_CONFIG_FILENAME)))) {
-				spinner.fail(SEO_CONFIG_FILENAME + ' file not found');
+				spinner.fail(`${SEO_CONFIG_FILENAME} file not found`);
 				console.log(chalk.yellow('\n💡 Run first: ') + chalk.white('bunx seox init'));
 				return;
 			}

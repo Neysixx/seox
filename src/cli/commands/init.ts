@@ -1,7 +1,7 @@
+import path from 'node:path';
 import chalk from 'chalk';
 import fs from 'fs-extra';
 import ora from 'ora';
-import path from 'path';
 import prompts from 'prompts';
 import { PACKAGE_NAME, SEO_CONFIG_FILENAME } from '../../constants';
 import { TEMPLATES } from '../constants';
@@ -12,7 +12,7 @@ program
 	.command('init')
 	.description('Initialize the SEOX SEO configuration')
 	//   .option('-t, --template <type>', 'Template to use (blog, ecommerce, corporate)', 'default') // TODO: Add template option
-	.action(async (options) => {
+	.action(async (_options) => {
 		console.log(chalk.cyan.bold(`\n🧠 ${PACKAGE_NAME} - Initialization\n`));
 
 		// Check if the file already exists

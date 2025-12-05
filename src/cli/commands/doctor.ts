@@ -15,7 +15,7 @@ program
 
 		try {
 			if (!(await fs.pathExists(getPath(SEO_CONFIG_FILENAME)))) {
-				spinner.fail(SEO_CONFIG_FILENAME + ' file not found');
+				spinner.fail(`${SEO_CONFIG_FILENAME} file not found`);
 				return;
 			}
 

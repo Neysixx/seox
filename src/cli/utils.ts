@@ -1,5 +1,5 @@
+import path from 'node:path';
 import fs from 'fs-extra';
-import path from 'path';
 import { SEO_CONFIG_DIR } from '../constants';
 import type { FileInfo } from './types';
 
@@ -10,7 +10,7 @@ import type { FileInfo } from './types';
  */
 export function getPath(filename: string): string {
 	// Check if we are in a src based codebase
-	if (fs.existsSync(process.cwd() + '/src')) {
+	if (fs.existsSync(`${process.cwd()}/src`)) {
 		return path.join(process.cwd(), 'src', SEO_CONFIG_DIR, filename);
 	}
 	return path.join(process.cwd(), SEO_CONFIG_DIR, filename);
@@ -53,7 +53,7 @@ export async function findNextFiles(): Promise<FileInfo[]> {
 	const files: FileInfo[] = [];
 
 	// Check if we're in a src-based project
-	const baseDir = fs.existsSync(process.cwd() + '/src') ? 'src' : '';
+	const baseDir = fs.existsSync(`${process.cwd()}/src`) ? 'src' : '';
 	const appDir = path.join(process.cwd(), baseDir, 'app');
 	const pagesDir = path.join(process.cwd(), baseDir, 'pages');
 
