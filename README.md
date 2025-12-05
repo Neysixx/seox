@@ -5,7 +5,7 @@
 Seox is an **open source tool** that centralizes and automates **SEO management** (meta tags, Open Graph, JSON-LD...) in **Next.js** projects using the **App Router**.  
 It combines **TypeScript-typed configuration**, **automatic metadata injection**, and an **intuitive CLI** to guide developers.
 
-[![npm version](https://img.shields.io/npm/v/metanext.svg)](https://www.npmjs.com/package/seox)
+[![npm version](https://img.shields.io/npm/v/seox.svg)](https://www.npmjs.com/package/seox)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
 
