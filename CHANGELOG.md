@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.1](https://github.com/Neysixx/seox/compare/v1.1.0...v1.1.1) (2025-12-05)
+
+
+### Bug Fixes
+
+* correct npm badge URL in README ([c2c06d9](https://github.com/Neysixx/seox/commit/c2c06d9b22967c78c88eec17b92fbea55b85fc1c))
+
 ## [1.1.0](https://github.com/Neysixx/seox/compare/v1.0.0...v1.1.0) (2025-12-04)
 
 
