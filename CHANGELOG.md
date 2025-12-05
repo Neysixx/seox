@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.0](https://github.com/Neysixx/seox/compare/v1.1.1...v1.2.0) (2025-12-05)
+
+
+### Features
+
+* refactor seoconfig to include all next Metadata fields ([#6](https://github.com/Neysixx/seox/issues/6)) ([e26e3ac](https://github.com/Neysixx/seox/commit/e26e3aca7692e3dda7686a881a2103befbf993f0))
+
 ## [1.1.1](https://github.com/Neysixx/seox/compare/v1.1.0...v1.1.1) (2025-12-05)
 
 
