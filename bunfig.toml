@@ -1,0 +1,4 @@
+[test]
+
+# Use happy-dom for DOM testing
+preload = ["./tests/setup.ts"]

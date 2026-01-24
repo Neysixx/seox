@@ -1,4 +1,5 @@
 import path from 'node:path';
+import type { SEOConfig } from '@src/types';
 import fs from 'fs-extra';
 import { SEO_CONFIG_DIR } from '../constants';
 import type { FileInfo } from './types';
@@ -17,30 +18,45 @@ export function getPath(filename: string): string {
 }
 
 /**
- * Run the doctor checks
- * @param config - The configuration object
- * @returns The issues object
+ * Extract the title string from SEOConfig title (can be string or object)
  */
-export function runDoctorChecks(config: any) {
+function getTitleString(title: unknown): string | null {
+	if (typeof title === 'string') {
+		return title;
+	}
+	if (title && typeof title === 'object' && 'default' in title) {
+		return (title as { default: string }).default;
+	}
+	return null;
+}
+
+/**
+ * Run the doctor checks on a SEOConfig object
+ * @param config - The SEOConfig object
+ * @returns The issues object with errors, warnings, and suggestions
+ */
+export function runDoctorChecks(config: SEOConfig) {
 	const issues = { errors: [] as string[], warnings: [] as string[], suggestions: [] as string[] };
 
-	// Check the titles
-	Object.entries(config.pages || {}).forEach(([name, page]: [string, any]) => {
-		if (!page.title) {
-			(issues.errors as string[]).push(`Page "${name}" : title missing`);
-		} else if (page.title.length > 60) {
-			(issues.warnings as string[]).push(`Page "${name}" : title too long (${page.title.length} > 60)`);
-		}
-		if (!page.description) {
-			(issues.errors as string[]).push(`Page "${name}" : description missing`);
-		} else if (page.description.length > 160) {
-			(issues.warnings as string[]).push(`Page "${name}" : description too long (${page.description.length} > 160)`);
-		}
+	// Check title
+	const titleString = getTitleString(config.title);
+	if (!titleString) {
+		issues.errors.push('title is missing');
+	} else if (titleString.length > 60) {
+		issues.warnings.push(`title is too long (${titleString.length} > 60 characters)`);
+	}
 
-		if (!page.jsonld || page.jsonld.length === 0) {
-			(issues.suggestions as string[]).push(`Page "${name}" : add JSON-LD to improve indexing`);
-		}
-	});
+	// Check description
+	if (!config.description) {
+		issues.errors.push('description is missing');
+	} else if (config.description.length > 160) {
+		issues.warnings.push(`description is too long (${config.description.length} > 160 characters)`);
+	}
+
+	// Check JSON-LD
+	if (!config.jsonld || config.jsonld.length === 0) {
+		issues.suggestions.push('add JSON-LD structured data to improve search engine indexing');
+	}
 
 	return issues;
 }
