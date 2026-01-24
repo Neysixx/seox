@@ -1,8 +1,8 @@
 import chalk from 'chalk';
 import fs from 'fs-extra';
 import ora from 'ora';
-import { PACKAGE_NAME, SEO_CONFIG_FILENAME } from '../../constants';
-import { getPath, runDoctorChecks } from '../utils';
+import { PACKAGE_NAME, SEO_CONFIG_FILENAME } from '@src/constants';
+import { getPath, runDoctorChecks } from '@src/cli/utils';
 import { program } from './program';
 
 program
@@ -15,16 +15,21 @@ program
 
 		try {
 			if (!(await fs.pathExists(getPath(SEO_CONFIG_FILENAME)))) {
-				spinner.fail(`${SEO_CONFIG_FILENAME} file not found`);
+				spinner.fail(`${SEO_CONFIG_FILENAME} file not found in ${getPath(SEO_CONFIG_FILENAME)}`);
 				return;
 			}
 
 			const configModule = await import(getPath(SEO_CONFIG_FILENAME));
-			const config = configModule.default;
+			const seoInstance = configModule.seoConfig;
+
+			if (!seoInstance || !seoInstance.config) {
+				spinner.fail('seoConfig not found in configuration file. Make sure you export "seoConfig".');
+				return;
+			}
 
 			spinner.stop();
 
-			const issues = runDoctorChecks(config);
+			const issues = runDoctorChecks(seoInstance.config);
 
 			if (issues.errors.length === 0 && issues.warnings.length === 0) {
 				console.log(chalk.green('✅ No issues detected ! Your SEO configuration is optimal.\n'));
