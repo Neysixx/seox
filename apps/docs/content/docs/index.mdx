@@ -1,0 +1,108 @@
+---
+title: Introduction
+description: SEO for Next.js made simple - Type-safe metadata, JSON-LD, and CLI tools
+---
+
+# SEOX
+
+SEOX is a powerful yet simple SEO library for Next.js applications. It provides type-safe metadata management, JSON-LD structured data components, and CLI tools for seamless SEO configuration.
+
+## Architecture Overview
+
+```mermaid
+graph TD
+    subgraph Config["Configuration Layer"]
+        A[seox.config.ts]
+    end
+
+    subgraph Core["SEOX Core"]
+        B[SEOX Class]
+        C[JsonLd Component]
+    end
+
+    subgraph Output["Next.js Output"]
+        D[Metadata Object]
+        E[Structured Data]
+    end
+
+    A --> B
+    B --> D
+    C --> E
+
+    D --> F[Search Engines]
+    E --> F
+```
+
+## Features
+
+<Cards>
+  <Card title="Type-Safe Metadata" href="/docs/api/seox-class">
+    Full TypeScript support with autocomplete for all Next.js metadata fields. Catch errors at build time.
+  </Card>
+  <Card title="JSON-LD Components" href="/docs/api/json-ld">
+    Ready-to-use React components for structured data. Support for Article, Product, Organization, and more.
+  </Card>
+  <Card title="CLI Tools" href="/docs/cli">
+    Initialize projects with `seox init`, configure metadata with `seox configure`, and diagnose issues with `seox doctor`.
+  </Card>
+</Cards>
+
+## Quick Start
+
+```bash
+# Install the package
+bun add seox
+
+# Initialize your project
+bunx seox init
+
+# Configure your metadata
+bunx seox configure
+```
+
+## Basic Usage
+
+```tsx title="app/page.tsx"
+import { SEOX } from 'seox/next';
+import { config } from '@/seox.config';
+
+export async function generateMetadata() {
+  return new SEOX(config).metadata({
+    title: 'My Page',
+    description: 'Page description',
+  });
+}
+
+export default function Page() {
+  return <main>Content</main>;
+}
+```
+
+## How It Works
+
+```mermaid
+sequenceDiagram
+    participant Dev as Developer
+    participant Config as seox.config.ts
+    participant SEOX as SEOX Class
+    participant Next as Next.js
+    participant Browser as Browser/Crawler
+
+    Dev->>Config: Define site-wide SEO settings
+    Dev->>SEOX: Call metadata() with page options
+    SEOX->>Config: Merge with defaults
+    SEOX->>Next: Return Metadata object
+    Next->>Browser: Render meta tags
+    Browser->>Browser: Index content
+```
+
+## Next Steps
+
+<Cards>
+  <Card title="Installation" href="/docs/installation">
+    Detailed installation guide and requirements
+  </Card>
+  <Card title="Configuration" href="/docs/configuration">
+    Learn how to configure SEOX for your project
+  </Card>
+</Cards>

@@ -1,0 +1,4 @@
+{
+  "title": "CLI Commands",
+  "pages": ["index", "init", "configure", "doctor"]
+}
