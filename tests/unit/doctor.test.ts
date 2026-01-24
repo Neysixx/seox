@@ -3,6 +3,7 @@
 
 import { describe, expect, it } from 'bun:test';
 import { runDoctorChecks } from '@src/cli/utils';
+import type { SEOConfig } from '@src/types';
 
 describe('runDoctorChecks', () => {
 	describe('errors', () => {
@@ -149,7 +150,7 @@ describe('runDoctorChecks', () => {
 				description: 'Valid description',
 			};
 
-			const issues = runDoctorChecks(config);
+			const issues = runDoctorChecks(config as SEOConfig);
 
 			expect(issues.errors).toContainEqual('title is missing');
 		});
