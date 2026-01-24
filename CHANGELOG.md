@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.0](https://github.com/Neysixx/seox/compare/v1.2.0...v1.3.0) (2026-01-24)
+
+
+### Features
+
+* implement test coverage and fix doctor command ([#8](https://github.com/Neysixx/seox/issues/8)) ([b637a31](https://github.com/Neysixx/seox/commit/b637a31870c247a419769baf1de09f469d6dc2e3))
+
 ## [1.2.0](https://github.com/Neysixx/seox/compare/v1.1.1...v1.2.0) (2025-12-05)
 
 
