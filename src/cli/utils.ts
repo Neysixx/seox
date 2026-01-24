@@ -1,8 +1,8 @@
 import path from 'node:path';
+import type { SEOConfig } from '@src/types';
 import fs from 'fs-extra';
 import { SEO_CONFIG_DIR } from '../constants';
 import type { FileInfo } from './types';
-import type { SEOConfig } from '@src/types';
 
 /**
  * Get the path to the configuration file

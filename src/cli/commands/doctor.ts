@@ -1,8 +1,8 @@
+import { getPath, runDoctorChecks } from '@src/cli/utils';
+import { PACKAGE_NAME, SEO_CONFIG_FILENAME } from '@src/constants';
 import chalk from 'chalk';
 import fs from 'fs-extra';
 import ora from 'ora';
-import { PACKAGE_NAME, SEO_CONFIG_FILENAME } from '@src/constants';
-import { getPath, runDoctorChecks } from '@src/cli/utils';
 import { program } from './program';
 
 program
