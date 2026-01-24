@@ -8,16 +8,8 @@
 	},
 	"files": {
 		"ignoreUnknown": false,
-		"includes": [
-			"./packages/**/*.{js,ts,jsx,tsx,json,css,html}",
-			"./apps/**/*.{js,ts,jsx,tsx,json,css,html}"
-		],
-		"experimentalScannerIgnores": [
-			"**/.next/**/*",
-			"**/node_modules/**/*",
-			"**/dist/**/*",
-			"**/out/**/*"
-		]
+		"includes": ["./packages/**/*.{js,ts,jsx,tsx,json,css,html}", "./apps/**/*.{js,ts,jsx,tsx,json,css,html}"],
+		"experimentalScannerIgnores": ["**/.next/**/*", "**/node_modules/**/*", "**/dist/**/*", "**/out/**/*"]
 	},
 	"formatter": {
 		"enabled": true,
@@ -61,9 +53,7 @@
 	},
 	"overrides": [
 		{
-			"includes": [
-				"**/*.css"
-			],
+			"includes": ["**/*.css"],
 			"linter": {
 				"rules": {
 					"suspicious": {
