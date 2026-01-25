@@ -1,7 +1,9 @@
 import { getPath, runDoctorChecks } from '@src/cli/utils';
 import { PACKAGE_NAME, SEO_CONFIG_FILENAME } from '@src/constants';
+import type { SEOConfig } from '@src/types';
 import chalk from 'chalk';
 import fs from 'fs-extra';
+import { createJiti } from 'jiti';
 import ora from 'ora';
 import { program } from './program';
 
@@ -19,8 +21,9 @@ program
 				return;
 			}
 
-			const configModule = await import(getPath(SEO_CONFIG_FILENAME));
-			const seoInstance = configModule.seoConfig;
+			const jiti = createJiti(import.meta.url, { interopDefault: true });
+			const configModule = (await jiti.import(getPath(SEO_CONFIG_FILENAME))) as Record<string, unknown>;
+			const seoInstance = configModule.seoConfig as { config: SEOConfig } | undefined;
 
 			if (!seoInstance || !seoInstance.config) {
 				spinner.fail('seoConfig not found in configuration file. Make sure you export "seoConfig".');
