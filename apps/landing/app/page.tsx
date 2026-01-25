@@ -3,11 +3,11 @@
 
 'use client';
 
+import { AnimatePresence, motion } from 'framer-motion';
 import { Check, Copy, ExternalLink, Terminal, Zap } from 'lucide-react';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
-import { AnimatePresence, motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -79,9 +79,7 @@ function Hero() {
 				className='text-center'
 			>
 				<h1 className='text-[20vw] md:text-[15vw] lg:text-[12vw] font-bold leading-none tracking-tighter'>
-					<span className='text-transparent bg-clip-text [-webkit-text-stroke:2px_rgba(255,255,255,0.8)]'>
-						SEOX
-					</span>
+					<span className='text-transparent bg-clip-text [-webkit-text-stroke:2px_rgba(255,255,255,0.8)]'>SEOX</span>
 					<span className='text-neon cursor-blink'>_</span>
 				</h1>
 			</motion.div>
@@ -108,12 +106,7 @@ function Hero() {
 								</motion.code>
 							</AnimatePresence>
 						</div>
-						<Button
-							variant='ghost'
-							size='icon-sm'
-							onClick={handleCopy}
-							className='hover:text-neon hover:bg-neon/10'
-						>
+						<Button variant='ghost' size='icon-sm' onClick={handleCopy} className='hover:text-neon hover:bg-neon/10'>
 							{copied ? <Check className='text-neon' /> : <Copy />}
 						</Button>
 					</div>
