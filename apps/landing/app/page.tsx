@@ -18,7 +18,7 @@ function Navbar() {
 				</Link>
 				<div className='flex items-center gap-4'>
 					<Button asChild variant='ghost' size='sm' className='text-muted-foreground hover:text-foreground'>
-						<Link href='https://docs.seox.dev' target='_blank' rel='noopener noreferrer'>
+						<Link href='https://docs.seo-x.dev' target='_blank' rel='noopener noreferrer'>
 							Docs
 							<ExternalLink className='size-3 ml-1' />
 						</Link>
@@ -298,7 +298,7 @@ function Footer() {
 					<span>— SEO for Next.js</span>
 				</div>
 				<nav className='flex gap-6'>
-					<Link href='https://docs.seox.dev' className='hover:text-neon transition-colors'>
+					<Link href='https://docs.seo-x.dev' className='hover:text-neon transition-colors'>
 						Docs
 					</Link>
 					<Link href='https://www.npmjs.com/package/seox' className='hover:text-neon transition-colors'>

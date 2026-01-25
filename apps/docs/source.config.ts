@@ -1,6 +1,3 @@
-// ABOUTME: Fumadocs MDX source configuration
-// ABOUTME: Defines collections and MDX processing options
-
 import { remarkMdxMermaid } from "fumadocs-core/mdx-plugins";
 import {
   defineConfig,
