@@ -1,29 +1,26 @@
 // ABOUTME: Root layout for the SEOX landing page
-// ABOUTME: Configures fonts, global styles, and metadata
+// ABOUTME: Configures monospace font and dark theme for cyber-minimalist aesthetic
 
 import type { Metadata } from 'next';
-import { Geist, Geist_Mono } from 'next/font/google';
+import { JetBrains_Mono } from 'next/font/google';
+import { Toaster } from '@/components/ui/sonner';
 import './globals.css';
 
-const geistSans = Geist({
-	variable: '--font-geist-sans',
-	subsets: ['latin'],
-});
-
-const geistMono = Geist_Mono({
+const jetbrainsMono = JetBrains_Mono({
 	variable: '--font-geist-mono',
 	subsets: ['latin'],
+	weight: ['400', '500', '600', '700'],
 });
 
 export const metadata: Metadata = {
-	title: 'SEOX - SEO for Next.js made simple',
+	title: 'SEOX — Control Your SEO',
 	description:
-		'Elegant SEO management for Next.js applications. Type-safe metadata, JSON-LD structured data, and CLI tools for seamless SEO configuration.',
-	keywords: ['seo', 'nextjs', 'typescript', 'metadata', 'json-ld', 'structured-data'],
+		'Type-safe SEO management for Next.js. Centralized metadata, JSON-LD structured data, and CLI tools. 1.2kb gzipped.',
+	keywords: ['seo', 'nextjs', 'typescript', 'metadata', 'json-ld', 'structured-data', 'developer-tools'],
 	authors: [{ name: 'Kyllian SENRENS' }],
 	openGraph: {
-		title: 'SEOX - SEO for Next.js made simple',
-		description: 'Elegant SEO management for Next.js applications',
+		title: 'SEOX — Control Your SEO',
+		description: 'Type-safe SEO management for Next.js',
 		type: 'website',
 	},
 };
@@ -34,8 +31,11 @@ export default function RootLayout({
 	children: React.ReactNode;
 }>) {
 	return (
-		<html lang='en'>
-			<body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>{children}</body>
+		<html lang='en' className='dark'>
+			<body className={`${jetbrainsMono.variable} antialiased`}>
+				{children}
+				<Toaster position='bottom-center' />
+			</body>
 		</html>
 	);
 }
