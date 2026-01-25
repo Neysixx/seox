@@ -2,12 +2,14 @@
 	"$schema": "https://raw.githubusercontent.com/googleapis/release-please/main/schemas/config.json",
 	"release-type": "node",
 	"include-v-in-tag": true,
+	"include-component-in-tag": false,
 	"separate-pull-requests": false,
 	"extra-files": [],
 	"pull-request-title-pattern": "chore: release v${version}",
 	"group-pull-request-title-pattern": "chore: release v${version}",
 	"packages": {
 		"packages/seox": {
+			"last-release-sha": "97a5701414e348486a8aeede9cf3e31948cdb7a0",
 			"changelog-sections": [
 				{ "type": "feat", "section": "Features" },
 				{ "type": "fix", "section": "Bug Fixes" },
