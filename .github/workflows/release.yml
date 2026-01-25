@@ -13,68 +13,69 @@ permissions:
 
 jobs:
   create-release:
-    name: "🚀 Create Release"
+    name: "Create Release"
     runs-on: ubuntu-latest
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
     outputs:
-      release_created: ${{ steps.release.outputs.release_created }}
-      version: ${{ steps.release.outputs.version }}
-      tag_name: ${{ steps.release.outputs.tag_name }}
+      release_created: ${{ steps.release.outputs['packages/seox--release_created'] }}
+      version: ${{ steps.release.outputs['packages/seox--version'] }}
+      tag_name: ${{ steps.release.outputs['packages/seox--tag_name'] }}
     steps:
-      - name: "📥 Checkout Code"
+      - name: "Checkout Code"
         uses: actions/checkout@v4
 
-      - name: "📋 Run Release Please"
+      - name: "Run Release Please"
         uses: googleapis/release-please-action@v4
         id: release
         with:
-          release-type: node
           token: ${{ secrets.GITHUB_TOKEN }}
 
   publish:
-    name: "📦 Build & Publish"
+    name: "Build & Publish"
     runs-on: ubuntu-latest
     needs: create-release
     if: ${{ needs.create-release.outputs.release_created == 'true' }}
     steps:
-      - name: "📥 Checkout Released Code"
+      - name: "Checkout Released Code"
         uses: actions/checkout@v4
         with:
           ref: ${{ needs.create-release.outputs.tag_name }}
 
-      - name: "🔧 Setup Bun Runtime"
+      - name: "Setup Bun Runtime"
         uses: oven-sh/setup-bun@v2
         with:
           bun-version: latest
 
-      - name: "🔧 Setup Node.js for npm publish"
+      - name: "Setup Node.js for npm publish"
         uses: actions/setup-node@v4
         with:
           node-version: "20"
           registry-url: "https://registry.npmjs.org"
 
-      - name: "📦 Install Dependencies"
+      - name: "Install Dependencies"
         run: bun install --frozen-lockfile
 
-      - name: "🏗️ Build Project"
+      - name: "Build Package"
         run: bun run build
 
-      - name: "🧪 Run Tests"
-        run: bun test
+      - name: "Run Tests"
+        run: bun run test
 
-      - name: "📤 Publish to npm"
+      - name: "Publish to npm"
+        working-directory: packages/seox
         run: npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
-      - name: "📦 Create Distribution Archive"
+      - name: "Create Distribution Archive"
+        working-directory: packages/seox
         run: npm pack
 
-      - name: "📤 Upload Release Asset"
+      - name: "Upload Release Asset"
         uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ needs.create-release.outputs.tag_name }}
-          files: "*.tgz"
+          files: "packages/seox/*.tgz"
           make_latest: true
           generate_release_notes: true
         env:

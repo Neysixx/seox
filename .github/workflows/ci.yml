@@ -11,37 +11,45 @@ permissions:
 
 jobs:
   ci:
-    name: "✅ CI Checks"
+    name: "CI Checks"
     runs-on: ubuntu-latest
-    
+
     steps:
-      - name: "📥 Checkout Code"
+      - name: "Checkout Code"
         uses: actions/checkout@v4
 
-      - name: "🔧 Setup Bun Runtime"
+      - name: "Setup Bun Runtime"
         uses: oven-sh/setup-bun@v2
         with:
           bun-version: latest
 
-      - name: "📦 Install Dependencies"
+      - name: "Install Dependencies"
         run: bun install --frozen-lockfile
 
-      - name: "🔍 Type Check"
+      - name: "Type Check (seox)"
         run: bun run typecheck
 
-      - name: "💅 Format Check"
+      - name: "Format Check"
         run: bun run format:check
 
-      - name: "🧪 Run Tests"
+      - name: "Run Tests (seox)"
         run: bun run test
 
-      - name: "🏗️ Build Project"
+      - name: "Build Package (seox)"
         run: bun run build
 
-      - name: "💾 Cache Build Artifacts"
-        uses: actions/cache/save@v3
+      - name: "Build Landing"
+        run: bun run --cwd apps/landing build
+
+      - name: "Build Docs"
+        run: bun run --cwd apps/docs build
+
+      - name: "Cache Build Artifacts"
+        uses: actions/cache/save@v4
         with:
           path: |
-            dist/
+            packages/seox/dist/
+            apps/landing/.next/
+            apps/docs/.next/
             node_modules/
           key: build-${{ github.sha }}-${{ hashFiles('**/bun.lock') }}

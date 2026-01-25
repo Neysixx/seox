@@ -8,7 +8,7 @@
 	},
 	"files": {
 		"ignoreUnknown": false,
-		"includes": ["./src/**/*.{js,ts,jsx,tsx,json,css,html}"],
+		"includes": ["./packages/**/*.{js,ts,jsx,tsx,json,css,html}", "./apps/**/*.{js,ts,jsx,tsx,json,css,html}"],
 		"experimentalScannerIgnores": ["**/.next/**/*", "**/node_modules/**/*", "**/dist/**/*", "**/out/**/*"]
 	},
 	"formatter": {
@@ -25,7 +25,8 @@
 			"suspicious": {
 				"noConsole": "off",
 				"noExplicitAny": "off",
-				"noArrayIndexKey": "off"
+				"noArrayIndexKey": "off",
+				"noUnknownAtRules": "off"
 			},
 			"a11y": {
 				"useKeyWithClickEvents": "info"
@@ -50,6 +51,18 @@
 			}
 		}
 	},
+	"overrides": [
+		{
+			"includes": ["**/*.css"],
+			"linter": {
+				"rules": {
+					"suspicious": {
+						"noUnknownAtRules": "off"
+					}
+				}
+			}
+		}
+	],
 	"javascript": {
 		"formatter": {
 			"quoteStyle": "single",
