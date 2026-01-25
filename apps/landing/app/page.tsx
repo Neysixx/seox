@@ -1,6 +1,3 @@
-// ABOUTME: SEOX landing page with cyber-minimalist aesthetic
-// ABOUTME: Hero, Logic tabs, Speed grid, and Footer sections
-
 'use client';
 
 import { AnimatePresence, motion } from 'framer-motion';
@@ -127,6 +124,9 @@ function Hero() {
 
 const configCode = `// lib/seo.ts
 import { Seox } from 'seox/next';
+
+
+export const metadata = seoConfig.configToMetadata();
 
 export const seoConfig = new Seox({
   name: 'My App',
