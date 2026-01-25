@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.0](https://github.com/Neysixx/seox/compare/seox-v1.2.0...seox-v1.3.0) (2026-01-25)
+
+
+### Features
+
+* monorepo-restructure ([#10](https://github.com/Neysixx/seox/issues/10)) ([aa45dee](https://github.com/Neysixx/seox/commit/aa45dee4b553e443432fecc40115f1d7c7431d89))
+
 ## [1.3.0](https://github.com/Neysixx/seox/compare/v1.2.0...v1.3.0) (2026-01-24)
 
 
