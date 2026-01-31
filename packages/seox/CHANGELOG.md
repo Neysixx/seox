@@ -1,5 +1,22 @@
 # Changelog
 
+## [1.4.0](https://github.com/Neysixx/seox/compare/v1.3.0...v1.4.0) (2026-01-31)
+
+
+### Features
+
+* monorepo-restructure ([#10](https://github.com/Neysixx/seox/issues/10)) ([aa45dee](https://github.com/Neysixx/seox/commit/aa45dee4b553e443432fecc40115f1d7c7431d89))
+
+
+### Bug Fixes
+
+* monorepo deployment config ([#14](https://github.com/Neysixx/seox/issues/14)) ([9c9fab1](https://github.com/Neysixx/seox/commit/9c9fab1e52ce2725d7ae5d9f0583f4186cb4d7f0))
+
+
+### Miscellaneous
+
+* release v ([#13](https://github.com/Neysixx/seox/issues/13)) ([0d44533](https://github.com/Neysixx/seox/commit/0d445338ccf2aa0aea25311fa4a33b4ac8ac46c5))
+
 ## [1.3.0](https://github.com/Neysixx/seox/compare/seox-v1.2.0...seox-v1.3.0) (2026-01-25)
 
 
