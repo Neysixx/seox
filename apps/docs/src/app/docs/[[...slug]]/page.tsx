@@ -8,6 +8,7 @@ import { createRelativeLink } from "fumadocs-ui/mdx";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { LLMCopyButton, ViewOptions } from "@/components/ai/page-actions";
+import { seoConfig } from "@/lib/seo";
 import { getPageImage, source } from "@/lib/source";
 import { getMDXComponents } from "@/mdx-components";
 
@@ -60,11 +61,25 @@ export async function generateMetadata(
   const page = source.getPage(params.slug);
   if (!page) notFound();
 
-  return {
+  const pageUrl = `https://docs.seo-x.dev${page.url}`;
+
+  return seoConfig.generatePageMetadata({
     title: page.data.title,
     description: page.data.description,
+    alternates: {
+      canonical: pageUrl,
+    },
     openGraph: {
+      title: page.data.title,
+      description: page.data.description,
+      url: pageUrl,
+      images: getPageImage(page).url,
+      type: "article",
+    },
+    twitter: {
+      title: page.data.title,
+      description: page.data.description,
       images: getPageImage(page).url,
     },
-  };
+  });
 }
