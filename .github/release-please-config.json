@@ -3,7 +3,7 @@
 	"release-type": "node",
 	"include-v-in-tag": true,
 	"include-component-in-tag": false,
-	"separate-pull-requests": false,
+	"separate-pull-requests": true,
 	"extra-files": [],
 	"pull-request-title-pattern": "chore: release v${version}",
 	"group-pull-request-title-pattern": "chore: release v${version}",
@@ -11,12 +11,30 @@
 		"packages/seox": {
 			"last-release-sha": "97a5701414e348486a8aeede9cf3e31948cdb7a0",
 			"changelog-sections": [
-				{ "type": "feat", "section": "Features" },
-				{ "type": "fix", "section": "Bug Fixes" },
-				{ "type": "perf", "section": "Performance" },
-				{ "type": "refactor", "section": "Refactor" },
-				{ "type": "chore", "section": "Miscellaneous" },
-				{ "type": "docs", "section": "Documentation" }
+				{
+					"type": "feat",
+					"section": "Features"
+				},
+				{
+					"type": "fix",
+					"section": "Bug Fixes"
+				},
+				{
+					"type": "perf",
+					"section": "Performance"
+				},
+				{
+					"type": "refactor",
+					"section": "Refactor"
+				},
+				{
+					"type": "chore",
+					"section": "Miscellaneous"
+				},
+				{
+					"type": "docs",
+					"section": "Documentation"
+				}
 			],
 			"release-type": "node",
 			"package-name": "seox",
